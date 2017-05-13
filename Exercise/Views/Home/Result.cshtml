@@ -1,0 +1,142 @@
+﻿@model List<Exercise.Models.ResultModel>
+@{
+    ViewBag.Title = "Result";
+}
+
+@if (Model.Count == 0)
+{
+    <h3>No matches found for your search</h3>
+}
+else
+{
+    foreach (Exercise.Models.ResultModel result in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">Result</div>
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Address</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Street:</label>
+                                @result.Address.Street
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">City:</label>
+                                @result.Address.City
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">State:</label>
+                                @result.Address.State
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Zip:</label>
+                                @result.Address.Zip
+                            </div>
+                            <br />
+                            <div class="col-md-12">
+                                <a class="btn btn-primary" href="http://maps.google.com/?q=@result.Address.Latitude,@result.Address.Longitude" target="_blank">
+                                    <span class="glyphicon glyphicon-map-marker"></span> 
+                                    View on Map
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Useful Links</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                Click <a href='@result.Link.HomeDetails' target="_blank">here</a> to get the property detail.
+                            </div>
+                            <div class="col-md-12">
+                                Click <a href='@result.Link.GraphsAndData' target="_blank">here</a> to get graph and data.
+                            </div>
+                            <div class="col-md-12">
+                                Click <a href='@result.Link.MapThisHome' target="_blank">here</a> to map this property.
+                            </div>
+                            <div class="col-md-12">
+                                Click <a href='@result.Link.Comparables' target="_blank">here</a> to compare with similar properties.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Zestimate</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Amount:</label>
+                                @string.Format("{0:C}", result.Zestimate.Amount)
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Last Updated On:</label>
+                                @result.Zestimate.LastUpdated
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Changed past week:</label>
+                                @if (string.Equals(result.Zestimate.OneWeekChange, "true", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <text> YES </text>
+                                }
+                                else
+                                {
+                                    <text> NO </text>
+                                }
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Value Change:</label>
+                                @string.Format("{0:C}", result.Zestimate.ValueChange)
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Valuation Range:</label>
+                                <strong>High:</strong> @string.Format("{0:C}", result.Zestimate.ValuationRange.High)
+                                ,<strong>Low:</strong> @string.Format("{0:C}", result.Zestimate.ValuationRange.Low)
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Percentile:</label>
+                                @string.Format("{0:F}", result.Zestimate.Percentile)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Local Real State Information</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Region Name:</label>
+                                @result.LocalRealState.Region.Name
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Region ID:</label>
+                                @result.LocalRealState.Region.Id
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Region Type:</label>
+                                @result.LocalRealState.Region.Type
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Zillow Index Value:</label>
+                                @string.Format("{0:C}", result.LocalRealState.Region.ZindexValue)
+                            </div>
+                            <div class="col-md-12">
+                                Click <a href='@result.LocalRealState.Region.Link.OverView' target="_blank">here</a> to get an overview of the neighborhood.
+                            </div>
+                            <div class="col-md-12">
+                                Click <a href='@result.LocalRealState.Region.Link.ForSaleByOwner' target="_blank">here</a> to get other homes for sale by owners in the area.
+                            </div>
+                            <div class="col-md-12">
+                                Click <a href='@result.LocalRealState.Region.Link.ForSale' target="_blank"> here</a> to get other homes for sale in the area.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+@Html.ActionLink("New Search", "Index", "Home", new { @class = "btn btn-primary" })
+

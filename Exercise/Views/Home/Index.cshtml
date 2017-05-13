@@ -1,0 +1,67 @@
+﻿@model Exercise.Models.AddressRequest
+@{
+    ViewBag.Title = "Search";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Please enter your address in the form below</h3>
+        </div>
+    </div>
+    <br />
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "LoginForm" }))
+    {
+        <div class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.TextBoxFor(model => model.Address, "address", new { @class = "form-control", placeholder = "Address" })
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                    <div class="col-lg-12">
+                        <label for="address" class="text-right">Address</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.TextBoxFor(model => model.City, new { @class = "form-control", placeholder = "City", maxlength = "50" })
+                        @Html.ValidationMessageFor(model => model.City)
+                    </div>
+                    <div class="col-lg-12">
+                        <label for="city" class="text-right">City</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.DropDownListFor(m => m.State, new SelectList(ViewBag.states, "Value", "Text"), new { style = "width : 100%" })
+                        @Html.ValidationMessageFor(model => model.State)
+                    </div>
+                    <div class="col-lg-12">
+                        <label for="states">State</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.TextBox("zip", null, new { @class = "form-control", placeholder = "ZIP", style = "width:100px", length="5" })
+                        @Html.ValidationMessageFor(model => model.Zip)
+                    </div>
+                    <div class="col-lg-12">
+                        <label for="zip">ZIP</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    }   
+</div>
